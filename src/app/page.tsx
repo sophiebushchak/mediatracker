@@ -1,18 +1,22 @@
 import { MediaTable } from '@/app/(components)/MediaTable';
 import { promises as fs } from 'fs';
+import {
+  MediaStatus,
+  MediaType,
+  UserMediaStatus,
+} from '@/data/definitions';
+import { getJsonData } from '@/data/data';
 
 export default async function Home() {
-  const jsonFile = await fs.readFile(process.cwd() + '/src/data/media.json', 'utf-8');
-  const jsonData: Media[] = JSON.parse(jsonFile);
-
-  const tables: Map<string, Media[]> = new Map();
-
-  jsonData.forEach((row) => {
-    const existingArray = tables.get(row.type);
+  const data = await getJsonData();
+  
+  const tables: Map<string, UserMediaStatus[]> = new Map();
+  data.forEach((row) => {
+    const existingArray = tables.get(row.media.type);
     if (existingArray) {
       existingArray.push(row);
     } else {
-      tables.set(row.type, [row]);
+      tables.set(row.media.type, [row]);
     }
   });
 
@@ -22,11 +26,11 @@ export default async function Home() {
       {Array.from(tables.entries()).map(entry => {
         const [mediaType, media] = entry;
         return (
-          <div className="p-4" key={mediaType}>
-            <h2 className="text-4xl font-bold mb-4">{mediaType}</h2>
+          <div className='p-4' key={mediaType}>
+            <h2 className='text-4xl font-bold mb-4'>{mediaType}</h2>
             <MediaTable media={media}/>
           </div>
-      )
+        );
       })}
 
 

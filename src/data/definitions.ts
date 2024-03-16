@@ -1,12 +1,14 @@
 export interface Media {
   title: string,
-  release?: ReleaseDate,
-  type: string,
-  status?: 'In-Progress' | 'Not Started' | 'Finished' | 'On Hold' | 'Played (Not Finished)' | 'Dropped' | 'Planned'
+  release?: Date,
+  type: MediaType,
 }
+export type MediaType = 'Game' | 'TV' | 'Movie'
 
-export interface ReleaseDate {
-  releaseYear: number,
-  releaseDay: number,
-  releaseMonth: number,
+export interface UserMediaStatus {
+  media: Media,
+  status: MediaStatus,
+  consumptionStartDate?: Date,
+  consumptionEndDate?: Date
 }
+export type MediaStatus = 'In-Progress' | 'Not Started' | 'Finished' | 'On Hold' | 'Played (Not Finished)' | 'Dropped' | 'Planned'

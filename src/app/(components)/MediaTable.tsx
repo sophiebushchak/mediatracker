@@ -5,24 +5,28 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { UserMediaStatus } from '@/data/definitions';
 
 export function MediaTable({
   media,
 }: {
-  media: Media[]
+  media: UserMediaStatus[]
 }) {
-  const columnHelper = createColumnHelper<Media>();
+  const columnHelper = createColumnHelper<UserMediaStatus>();
 
   const columns = [
-    columnHelper.accessor('title', {
+    columnHelper.accessor(userMedia => userMedia.media.title, {
+      id: 'title',
       cell: info => info.getValue(),
       header: 'Title',
     }),
-    columnHelper.accessor('type', {
+    columnHelper.accessor(userMedia => userMedia.media.type, {
       cell: info => info.getValue(),
-      header: 'Type'
+      header: 'Type',
+      enableSorting: false,
     }),
     columnHelper.accessor('status', {
       cell: info => info.getValue(),
@@ -34,6 +38,7 @@ export function MediaTable({
     data: media,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     enableColumnResizing: true,
   });
 
@@ -46,9 +51,16 @@ export function MediaTable({
               <th key={header.id}>
                 {header.isPlaceholder
                   ? null
-                  : flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
+                  : (
+                    <div
+                      className={header.column.getCanSort() ? 'cursor-pointer select-none' : ''}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                    </div>
                   )}
               </th>
             ))}
