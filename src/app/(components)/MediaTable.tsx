@@ -1,57 +1,91 @@
-import { ReactNode } from 'react';
+"use client"
+
+import React from 'react';
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 
 export function MediaTable({
   media,
 }: {
   media: Media[]
 }) {
-  const mediaSorted = media.sort((a, b) => {
-    if (a.type > b.type) {
-      return 1;
-    } else if (a.type === b.type) {
-      return 0;
-    }
-    return -1;
+  const rerender = React.useReducer(() => ({}), {})[1];
+
+  const columnHelper = createColumnHelper<Media>();
+
+  const columns = [
+    columnHelper.accessor('title', {
+      cell: info => info.getValue(),
+      header: 'Title',
+    }),
+    columnHelper.accessor('type', {
+      cell: info => info.getValue(),
+      header: 'Type'
+    }),
+    columnHelper.accessor('status', {
+      cell: info => info.getValue(),
+      header: 'Status'
+    }),
+  ];
+
+  const table = useReactTable({
+    data: media,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    enableColumnResizing: true,
   });
 
-  const tableRows = (): ReactNode => {
-    return mediaSorted.map(media => (
-      <TableRow key={media.title}>
-        <td>{media.title}</td>
-        <td>{media.status}</td>
-        <td>{media.type}</td>
-      </TableRow>
-    ));
-  };
-
   return (
-    <table>
-      <thead>
-      <TableRow>
-        <TableHeading scope='col'>Title</TableHeading>
-        <th scope='col'>Type</th>
-        <th scope='col'>Status</th>
-      </TableRow>
-      </thead>
-      <tbody>
-      {tableRows()}
-      </tbody>
-    </table>
-  );
-}
+      <table>
+        <thead>
+        {table.getHeaderGroups().map(headerGroup => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map(header => (
+              <th key={header.id}>
+                {header.isPlaceholder
+                  ? null
+                  : flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+              </th>
+            ))}
+          </tr>
+        ))}
+        </thead>
 
-function TableRow({ children }: { children: ReactNode}) {
-  return (
-    <tr className='py-2 border-b-2'>
-      {children}
-    </tr>
-  )
-}
+        <tbody>
+        {table.getRowModel().rows.map(row => (
+          <tr key={row.id}>
+            {row.getVisibleCells().map(cell => (
+              <td key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+            ))}
+          </tr>
+        ))}
+        </tbody>
 
-function TableHeading(props: { scope: string, children: React.ReactNode }) {
-  return (
-    <th>
-      {props.children}
-    </th>
+        <tfoot>
+        {table.getFooterGroups().map(footerGroup => (
+          <tr key={footerGroup.id}>
+            {footerGroup.headers.map(header => (
+              <th key={header.id}>
+                {header.isPlaceholder
+                  ? null
+                  : flexRender(
+                    header.column.columnDef.footer,
+                    header.getContext(),
+                  )}
+              </th>
+            ))}
+          </tr>
+        ))}
+        </tfoot>
+      </table>
   );
 }
