@@ -13,8 +13,6 @@ export function MediaTable({
 }: {
   media: Media[]
 }) {
-  const rerender = React.useReducer(() => ({}), {})[1];
-
   const columnHelper = createColumnHelper<Media>();
 
   const columns = [
@@ -40,7 +38,7 @@ export function MediaTable({
   });
 
   return (
-      <table>
+      <table className="w-full">
         <thead>
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id}>
@@ -69,23 +67,6 @@ export function MediaTable({
           </tr>
         ))}
         </tbody>
-
-        <tfoot>
-        {table.getFooterGroups().map(footerGroup => (
-          <tr key={footerGroup.id}>
-            {footerGroup.headers.map(header => (
-              <th key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                    header.column.columnDef.footer,
-                    header.getContext(),
-                  )}
-              </th>
-            ))}
-          </tr>
-        ))}
-        </tfoot>
       </table>
   );
 }
