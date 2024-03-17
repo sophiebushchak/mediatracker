@@ -43,7 +43,7 @@ export function MediaRelationTable({
   });
 
   return (
-      <table className="w-full">
+      <table className="w-full table-fixed">
         <thead>
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id}>
@@ -72,7 +72,7 @@ export function MediaRelationTable({
         {table.getRowModel().rows.map(row => (
           <tr key={row.id}>
             {row.getVisibleCells().map(cell => (
-              <td key={cell.id}>
+              <td key={cell.id} className="py-1">
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}

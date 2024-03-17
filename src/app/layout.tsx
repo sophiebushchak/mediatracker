@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang='en'>
     <body className={`${inter.className}`}>
     <main className='max-w-6xl px-4 mx-auto'>
-      <h1 className='text-6xl mt-8 mb-4 font-extrabold'>Track</h1>
+      <h1 className='text-6xl mt-8 mb-6 font-extrabold'>Track</h1>
       {children}
     </main>
     </body>

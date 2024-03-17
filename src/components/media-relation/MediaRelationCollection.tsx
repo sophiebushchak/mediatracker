@@ -16,7 +16,7 @@ export function MediaCollection({
     <>
       {Object.keys(splitTables).map((mediaType) => (
         <div className='p-4' key={mediaType}>
-          <h2 className='text-4xl font-bold mb-4'>{mediaType}</h2>
+          <h2 className='text-4xl font-bold mb-6'>{mediaType}</h2>
           <MediaRelationTable media={splitTables[mediaType]}/>
         </div>
       ))}
