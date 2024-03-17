@@ -5,10 +5,10 @@ export interface Media {
 }
 export type MediaType = 'Game' | 'TV' | 'Movie'
 
-export interface UserMediaStatus {
+export interface UserMediaRelation {
   media: Media,
-  status: MediaStatus,
+  status: MediaRelationStatus,
   consumptionStartDate?: Date,
   consumptionEndDate?: Date
 }
-export type MediaStatus = 'In-Progress' | 'Not Started' | 'Finished' | 'On Hold' | 'Played (Not Finished)' | 'Dropped' | 'Planned'
+export type MediaRelationStatus = 'Planned' | 'In-Progress' | 'Finished' | 'Played (Not Finished)' | 'On Hold' | 'Dropped'

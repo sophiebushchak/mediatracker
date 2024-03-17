@@ -8,14 +8,14 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { UserMediaStatus } from '@/data/definitions';
+import { UserMediaRelation } from '@/data/definitions';
 
-export function MediaTable({
+export function MediaRelationTable({
   media,
 }: {
-  media: UserMediaStatus[]
+  media: UserMediaRelation[]
 }) {
-  const columnHelper = createColumnHelper<UserMediaStatus>();
+  const columnHelper = createColumnHelper<UserMediaRelation>();
 
   const columns = [
     columnHelper.accessor(userMedia => userMedia.media.title, {

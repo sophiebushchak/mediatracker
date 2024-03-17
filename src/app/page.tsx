@@ -1,16 +1,16 @@
-import { MediaTable } from '@/app/(components)/MediaTable';
+import { MediaRelationTable } from '@/components/media-relation/MediaRelationTable';
 import { promises as fs } from 'fs';
 import {
-  MediaStatus,
+  MediaRelationStatus,
   MediaType,
-  UserMediaStatus,
+  UserMediaRelation,
 } from '@/data/definitions';
 import { getJsonData } from '@/data/data';
 
 export default async function Home() {
   const data = await getJsonData();
-  
-  const tables: Map<string, UserMediaStatus[]> = new Map();
+
+  const tables: Map<string, UserMediaRelation[]> = new Map();
   data.forEach((row) => {
     const existingArray = tables.get(row.media.type);
     if (existingArray) {
@@ -21,19 +21,16 @@ export default async function Home() {
   });
 
   return (
-    <main className='max-w-6xl px-4 mx-auto'>
-      <h1 className='text-6xl mt-8 mb-4 font-extrabold'>Track</h1>
+    <>
       {Array.from(tables.entries()).map(entry => {
         const [mediaType, media] = entry;
         return (
           <div className='p-4' key={mediaType}>
             <h2 className='text-4xl font-bold mb-4'>{mediaType}</h2>
-            <MediaTable media={media}/>
+            <MediaRelationTable media={media}/>
           </div>
         );
       })}
-
-
-    </main>
+    </>
   );
 }
