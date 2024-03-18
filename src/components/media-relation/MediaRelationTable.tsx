@@ -9,6 +9,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { UserMediaRelation } from '@/data/definitions';
+import MediaRelationStatusText from '@/components/media-relation/MediaRelationStatusText';
 
 export function MediaRelationTable({
   media,
@@ -29,7 +30,12 @@ export function MediaRelationTable({
       enableSorting: false,
     }),
     columnHelper.accessor('status', {
-      cell: info => info.getValue(),
+      cell: ({row}) => (
+        <MediaRelationStatusText
+          mediaType={row.original.media.type}
+          mediaStatus={row.original.status}
+        />
+      ),
       header: 'Status'
     }),
   ];
@@ -43,7 +49,7 @@ export function MediaRelationTable({
   });
 
   return (
-      <table className="w-full table-fixed">
+      <table className="w-full table-fixed relative">
         <thead>
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id}>
@@ -70,9 +76,9 @@ export function MediaRelationTable({
 
         <tbody>
         {table.getRowModel().rows.map(row => (
-          <tr key={row.id}>
+          <tr key={row.id} className='border-b-2'>
             {row.getVisibleCells().map(cell => (
-              <td key={cell.id} className="py-1">
+              <td key={cell.id} className="py-3 px-3">
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}
