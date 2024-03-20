@@ -9,7 +9,7 @@ const colourMap: Map<MediaRelationStatus, string> = new Map([
   ['Dropped', 'bg-stone-500'],
   ['Planned', 'bg-amber-400'],
   ['On Hold', 'bg-stone-500'],
-  ['Played (Not Finished)', 'bg-violet-500'],
+  ['Perpetual', 'bg-violet-500'],
 ]);
 
 function MediaRelationStatusText({

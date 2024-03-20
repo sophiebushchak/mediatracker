@@ -15,7 +15,7 @@ export async function getJsonData(): Promise<UserMediaRelation[]> {
   const jsonData: JsonEntry[] = JSON.parse(jsonFile);
 
   return jsonData.map(entry => ({
-    status: entry.status,
+    status: entry.status === 'Played (Not Finished)' ? 'Perpetual' : entry.status,
     media: {
       type: entry.type,
       title: entry.title,

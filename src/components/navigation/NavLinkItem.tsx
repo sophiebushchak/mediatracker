@@ -14,7 +14,7 @@ export default function NavLinkItem({
   const isActive = href === path
 
   return (
-    <li className={`text-2xl ${isActive ? 'underline' : ''}`}>
+    <li className={`text-2xl ${isActive ? 'border-b-4 pb-1 border-amber-300' : ''}`}>
       <Link href={href}>{text}</Link>
     </li>
   );

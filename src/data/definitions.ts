@@ -11,4 +11,6 @@ export interface UserMediaRelation {
   consumptionStartDate?: Date,
   consumptionEndDate?: Date
 }
-export type MediaRelationStatus = 'Planned' | 'In-Progress' | 'Finished' | 'Played (Not Finished)' | 'On Hold' | 'Dropped'
+export type MediaRelationStatus = 'Planned' | 'In-Progress' | 'Finished' | 'Perpetual' | 'On Hold' | 'Dropped'
+
+
